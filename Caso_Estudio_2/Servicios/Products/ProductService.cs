@@ -1,5 +1,6 @@
 ﻿using Modelos;
 using Repositorios.Products;
+using System;
 using System.Collections.Generic;
 
 namespace Servicios.Products
@@ -23,33 +24,21 @@ namespace Servicios.Products
         }
         public void CreateProduct(Product product)
         {
-            // Aquí se puede incluir lógica de negocio adicional
             _repository.Add(product);
         }
         public void DeleteProduct(int id)
         {
-            var product = _repository.GetById(id);
-            if (product != null)
-            {
-                // Aquí se puede incluir lógica de negocio adicional
-                _repository.Delete(id);
-            }
+            var existing = _repository.GetById(id);
+            if (existing == null)
+                throw new KeyNotFoundException($"Producto {id} no encontrado.");
+
+            _repository.Delete(id);
         }
         public Product EditProduct(Product updatedProduct)
         {
-            var existingProduct = _repository.GetById(updatedProduct.IdProduct);
-            if (existingProduct != null)
-            {
-                // Actualizar las propiedades del producto existente
-                existingProduct.Name = updatedProduct.Name;
-                existingProduct.Description = updatedProduct.Description;
-                existingProduct.Price = updatedProduct.Price;
-                existingProduct.Stock = updatedProduct.Stock;
-                existingProduct.Category = updatedProduct.Category;
-                // Aquí se puede incluir lógica de negocio adicional
-                _repository.Update(existingProduct);
-            }
-            return existingProduct;
+            if (updatedProduct == null) throw new ArgumentNullException(nameof(updatedProduct));
+            _repository.Update(updatedProduct);
+            return updatedProduct;
         }
     }
 }
