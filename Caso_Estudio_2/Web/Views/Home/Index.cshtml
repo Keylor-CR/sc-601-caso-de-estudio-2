@@ -1,33 +1,65 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+@{
+    ViewBag.Title = "Tienda Deportiva";
 }
 
-<main>
-    <section class="row" aria-labelledby="aspnetTitle">
-        <h1 id="title">ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-md">Learn more &raquo;</a></p>
-    </section>
+<div class="jumbotron">
+    <h1 class="display-4">Bienvenido a la Tienda Deportiva!</h1>
+    <p class="lead">Gestion completa de productos deportivos con tecnologia Web API y AJAX.</p>
+    <hr class="my-4">
+    @if (!Request.IsAuthenticated)
+    {
+        <p>Inicia sesion para gestionar productos deportivos.</p>
+        <a class="btn btn-primary btn-lg" href="@Url.Action("Login", "Account")">Iniciar Sesion</a>
+        <a class="btn btn-outline-primary btn-lg" href="@Url.Action("Register", "Account")">Registrarse</a>
+    }
+    else
+    {
+        <p>Comienza a gestionar tu inventario de productos deportivos.</p>
+        <a class="btn btn-success btn-lg" href="@Url.Action("Index", "Products")">Ver Productos</a>
+    }
+</div>
 
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2 id="gettingStartedTitle">Getting started</h2>
-            <p>
-                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-                enables a clean separation of concerns and gives you full control over markup
-                for enjoyable, agile development.
-            </p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle">
-            <h2 id="librariesTitle">Get more libraries</h2>
-            <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-        </section>
-        <section class="col-md-4" aria-labelledby="hostingTitle">
-            <h2 id="hostingTitle">Web Hosting</h2>
-            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-            <p><a class="btn btn-outline-dark" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-        </section>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-success text-white">
+                <h3 class="card-title mb-0">Gestion de Productos</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Administra tu inventario de productos deportivos de forma eficiente.</p>
+            </div>
+            <div class="card-footer">
+                @if (Request.IsAuthenticated)
+                {
+                    <a href="@Url.Action("Index", "Products")" class="btn btn-success">Ver Productos</a>
+                }
+                else
+                {
+                    <a href="@Url.Action("Login", "Account")" class="btn btn-outline-success">Iniciar Sesion</a>
+                }
+            </div>
+        </div>
     </div>
-</main>
+    
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title mb-0">Categorias Deportivas</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Organiza productos por categorias: Futbol, Basquetbol, Natacion y Tenis.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card h-100">
+            <div class="card-header bg-warning text-dark">
+                <h3 class="card-title mb-0">Tecnologia Web API</h3>
+            </div>
+            <div class="card-body">
+                <p class="card-text">Aplicacion desarrollada con ASP.NET MVC que consume Web API usando AJAX.</p>
+            </div>
+        </div>
+    </div>
+</div>

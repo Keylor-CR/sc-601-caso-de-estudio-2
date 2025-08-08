@@ -1,20 +1,100 @@
-﻿/* Set padding to keep content from hitting the edges */
+/* Estilos generales */
 .body-content {
-    margin-top: 15px;
+    margin-top: 20px;
     padding-left: 15px;
     padding-right: 15px;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+/* Formularios */
+.form-control,
+.form-select {
+    max-width: 100%;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+/* Cards de productos */
+.card {
+    transition: transform 0.2s;
+    border: 1px solid #dee2e6;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Jumbotron personalizado */
+.jumbotron {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 2rem;
+    border-radius: 0.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Botones */
+.btn {
+    border-radius: 0.375rem;
+    transition: all 0.2s;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Navbar */
+.navbar-brand {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+/* Animaciones de carga */
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Espaciado */
+.mt-4 {
+    margin-top: 1.5rem !important;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem !important;
+}
+
+/* Alertas */
+.alert {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Modales */
+.modal-content {
+    border-radius: 0.5rem;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    border-radius: 0.5rem 0.5rem 0 0;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.75em;
+    padding: 0.35em 0.65em;
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding: 1rem 0;
+    border-top: 1px solid #e9ecef;
+    color: #6c757d;
 }

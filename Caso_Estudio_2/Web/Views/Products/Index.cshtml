@@ -1,0 +1,109 @@
+@{
+    ViewBag.Title = "Gestion de Productos";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Gestion de Productos Deportivos</h2>
+    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openCreateModal()">
+        <i class="fas fa-plus"></i> Nuevo Producto
+    </button>
+</div>
+
+<div class="row mb-3">
+    <div class="col-md-6">
+        <select id="categoryFilter" class="form-select">
+            <option value="">Todas las Categorias</option>
+            <option value="Futbol">Futbol</option>
+            <option value="Basquetbol">Basquetbol</option>
+            <option value="Natacion">Natacion</option>
+            <option value="Tenis">Tenis</option>
+        </select>
+    </div>
+</div>
+
+<div id="loading" class="text-center" style="display: none;">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+</div>
+
+<div id="products-container">
+    <div class="row" id="products-list"></div>
+</div>
+
+<!-- Modal para Crear/Editar Producto -->
+<div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Nuevo Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <input type="hidden" id="productId" value="0">
+                    
+                    <div class="mb-3">
+                        <label for="productName" class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" id="productName" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="productDescription" class="form-label">Descripcion</label>
+                        <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="productPrice" class="form-label">Precio *</label>
+                        <input type="number" class="form-control" id="productPrice" step="0.01" min="0.01" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="productStock" class="form-label">Stock *</label>
+                        <input type="number" class="form-control" id="productStock" min="0" required>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="productCategory" class="form-label">Categoria *</label>
+                        <select class="form-select" id="productCategory" required>
+                            <option value="">Selecciona una categoria</option>
+                            <option value="Futbol">Futbol</option>
+                            <option value="Basquetbol">Basquetbol</option>
+                            <option value="Natacion">Natacion</option>
+                            <option value="Tenis">Tenis</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="saveProductBtn" onclick="saveProduct()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para Ver Detalles -->
+<div class="modal fade" id="detailsModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalles del Producto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="productDetails">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/Scripts/products.js"></script>
+}
