@@ -10,6 +10,7 @@ namespace Web.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+        private ApplicationRoleManager _roleManager;
 
         public ApplicationUserManager UserManager
         {
@@ -18,6 +19,15 @@ namespace Web.Controllers
                 return _userManager ?? new ApplicationUserManager();
             }
             private set { _userManager = value; }
+        }
+
+        public ApplicationRoleManager RoleManager
+        {
+            get
+            {
+                return _roleManager ?? new ApplicationRoleManager();
+            }
+            private set { _roleManager = value; }
         }
 
         public ActionResult Register()
@@ -42,7 +52,17 @@ namespace Web.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    // Usar FormsAuthentication en lugar de OWIN
+                    await ApplicationUserManager.InitializeRoles();
+                    
+                    if (model.Email.ToLower() == "admin@admin.com")
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    }
+                    else
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, "Usuario");
+                    }
+                    
                     FormsAuthentication.SetAuthCookie(user.UserName, false);
                     return RedirectToAction("Index", "Products");
                 }

@@ -4,9 +4,12 @@
 
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>Gestion de Productos Deportivos</h2>
-    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openCreateModal()">
-        <i class="fas fa-plus"></i> Nuevo Producto
-    </button>
+    @if (User.IsInRole("Admin"))
+    {
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" onclick="openCreateModal()">
+            <i class="fas fa-plus"></i> Nuevo Producto
+        </button>
+    }
 </div>
 
 <div class="row mb-3">
@@ -105,5 +108,13 @@
 </div>
 
 @section Scripts {
+    <script type="text/javascript">
+        // Pasar información del usuario desde el servidor al cliente
+        window.userInfo = {
+            isAuthenticated: @Json.Encode(Request.IsAuthenticated),
+            isAdmin: @Json.Encode(User.IsInRole("Admin")),
+            username: '@User.Identity.Name'
+        };
+    </script>
     <script src="~/Scripts/products.js"></script>
 }

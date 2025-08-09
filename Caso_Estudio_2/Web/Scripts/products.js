@@ -1,6 +1,12 @@
 $(document).ready(function () {
-    const apiBaseUrl = window.location.origin + "/api/products";
+    const apiBaseUrl = window.location.origin + "/api/producto";
     let allProducts = [];
+    // Obtener información del usuario desde el objeto global
+    const isAdmin = window.userInfo ? window.userInfo.isAdmin : false;
+    const isAuthenticated = window.userInfo ? window.userInfo.isAuthenticated : false;
+    
+    console.log('Usuario autenticado:', isAuthenticated);
+    console.log('Es Admin:', isAdmin);
 
     function showLoading() {
         $("#loading").show();
@@ -42,7 +48,7 @@ $(document).ready(function () {
     function loadProducts() {
         showLoading();
         
-        $.get(apiBaseUrl)
+$.get(apiBaseUrl + "/obtenertodos")
             .done(function (data) {
                 allProducts = data;
                 displayProducts(allProducts);
@@ -99,12 +105,12 @@ $(document).ready(function () {
                                 <button class="btn btn-outline-primary btn-sm" onclick="viewProductDetails(${product.IdProduct})">
                                     <i class="fas fa-eye"></i> Ver
                                 </button>
-                                <button class="btn btn-outline-warning btn-sm" onclick="editProduct(${product.IdProduct})">
+                                ${isAdmin ? `<button class="btn btn-outline-warning btn-sm" onclick="editProduct(${product.IdProduct})">
                                     <i class="fas fa-edit"></i> Editar
-                                </button>
-                                <button class="btn btn-outline-danger btn-sm" onclick="confirmDeleteProduct(${product.IdProduct}, '${product.Name}')">
+                                </button>` : ''}
+                                ${isAdmin ? `<button class="btn btn-outline-danger btn-sm" onclick="confirmDeleteProduct(${product.IdProduct}, '${product.Name}')">
                                     <i class="fas fa-trash"></i> Eliminar
-                                </button>
+                                </button>` : ''}
                             </div>
                         </div>
                     </div>
@@ -154,7 +160,7 @@ $(document).ready(function () {
     window.viewProductDetails = function(id) {
         showLoading();
         
-        $.get(`${apiBaseUrl}/${id}`)
+$.get(`${apiBaseUrl}/obtenerporid/${id}`)
             .done(function (product) {
                 hideLoading();
                 const detailsHtml = `
@@ -202,7 +208,7 @@ $(document).ready(function () {
         showLoading();
         
         $.ajax({
-            url: `${apiBaseUrl}/${id}`,
+url: `${apiBaseUrl}/eliminar/${id}`,
             type: "DELETE",
             success: function () {
                 hideLoading();
@@ -230,8 +236,8 @@ $(document).ready(function () {
             Category: $("#productCategory").val()
         };
 
-        const isEditing = productData.IdProduct > 0;
-        const url = isEditing ? `${apiBaseUrl}/${productData.IdProduct}` : apiBaseUrl;
+const isEditing = productData.IdProduct > 0;
+        const url = isEditing ? `${apiBaseUrl}/actualizar/${productData.IdProduct}` : `${apiBaseUrl}/crear`;
         const method = isEditing ? "PUT" : "POST";
 
         $("#saveProductBtn").prop("disabled", true).text("Guardando...");

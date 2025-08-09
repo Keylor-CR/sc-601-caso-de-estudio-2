@@ -12,6 +12,7 @@ using Repositorios.Data;
 namespace WebAPI.Controllers
 {
     [RoutePrefix("api/producto")]
+    [Authorize]
     public class ProductoController : ApiController
     {
         private readonly ProductService _service;
@@ -40,6 +41,7 @@ namespace WebAPI.Controllers
 
         [HttpPost]
         [Route("crear")]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult Post([FromBody] Product product)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -49,6 +51,7 @@ namespace WebAPI.Controllers
 
         [HttpPut]
         [Route("actualizar/{id:int}")]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult Put(int id, [FromBody] Product product)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
@@ -62,6 +65,7 @@ namespace WebAPI.Controllers
 
         [HttpDelete]
         [Route("eliminar/{id:int}")]
+        [Authorize(Roles = "Admin")]
         public IHttpActionResult Delete(int id)
         {
             var existing = _service.GetProduct(id);
